@@ -25,9 +25,8 @@ import com.example.boot.config.WebConfig;
 public class Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		LOGGER.debug("start");
-
 		SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Application.class);
 		SpringApplication springApplication = springApplicationBuilder.profiles("local").build();
 		// springApplication.setAddCommandLineProperties(true);

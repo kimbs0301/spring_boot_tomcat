@@ -6,14 +6,18 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * @author gimbyeongsu
  * 
  */
-public class EmbeddedTomcatWebInitalizer implements ServletContextInitializer {
-
+public class WebInitalizer implements ServletContextInitializer {
+	
+	public WebInitalizer() {
+	}
+	
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
@@ -24,6 +28,9 @@ public class EmbeddedTomcatWebInitalizer implements ServletContextInitializer {
 		// container.addListener(new ContextLoaderListener(context));
 		context.setServletContext(container);
 
+		container.addFilter("trackingFilter", new TrackingFilter()).addMappingForUrlPatterns(null, false, "/*");
+		// container.addFilter("shallowEtagHeaderFilter", new ShallowEtagHeaderFilter()).addMappingForUrlPatterns(null, false, "/*");
+		
 		DispatcherServlet dispatcher = new DispatcherServlet(context);
 		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", dispatcher);
 

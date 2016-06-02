@@ -61,9 +61,11 @@ public class EmbeddedTomcatConfig {
 		// Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		// connector.setPort(8081);
 		// factory.addAdditionalTomcatConnectors(connector);
+		
+		// ApplicationContext parent = new AnnotationConfigApplicationContext(InitConfig.class);
 
 		List<ServletContextInitializer> servletContextInitializers = new ArrayList<>();
-		servletContextInitializers.add(new EmbeddedTomcatWebInitalizer());
+		servletContextInitializers.add(new WebInitalizer());
 		factory.setInitializers(servletContextInitializers);
 
 		return factory;
