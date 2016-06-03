@@ -34,6 +34,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		LOGGER.debug("method executed");
 		
 		// response.setHeader("Content-Length", "10");
+		// response.setContentLength(10);
 	}
 
 	@Override

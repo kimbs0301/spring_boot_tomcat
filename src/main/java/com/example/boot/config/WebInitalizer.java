@@ -6,7 +6,6 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -28,7 +27,7 @@ public class WebInitalizer implements ServletContextInitializer {
 		// container.addListener(new ContextLoaderListener(context));
 		context.setServletContext(container);
 
-		container.addFilter("trackingFilter", new TrackingFilter()).addMappingForUrlPatterns(null, false, "/*");
+		container.addFilter("trackingFilter", new TrackingFilter()).addMappingForUrlPatterns(null, true, "/*");
 		// container.addFilter("shallowEtagHeaderFilter", new ShallowEtagHeaderFilter()).addMappingForUrlPatterns(null, false, "/*");
 		
 		DispatcherServlet dispatcher = new DispatcherServlet(context);

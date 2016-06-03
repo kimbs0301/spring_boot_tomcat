@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.valves.AccessLogValve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
+import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +26,12 @@ import org.springframework.core.env.Environment;
 @Configuration
 public class EmbeddedTomcatConfig {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedTomcatConfig.class);
-	
+
 	@Autowired
 	private Environment environment;
-//	@Autowired
-//	private EmbeddedTomcatWebInitalizer embeddedTomcatWebInitalizer;
+
+	// @Autowired
+	// private EmbeddedTomcatWebInitalizer embeddedTomcatWebInitalizer;
 
 	public EmbeddedTomcatConfig() {
 		LOGGER.debug("==============");
@@ -61,8 +64,23 @@ public class EmbeddedTomcatConfig {
 		// Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		// connector.setPort(8081);
 		// factory.addAdditionalTomcatConnectors(connector);
-		
+
 		// ApplicationContext parent = new AnnotationConfigApplicationContext(InitConfig.class);
+
+		factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
+
+			@Override
+			public void customize(Connector connector) {
+				connector.setProperty("useComet", "false");
+				connector.setProperty("connectionTimeout", "3000");
+				connector.setProperty("compression", "on");
+				connector.setProperty("compressionMinSize", "512");
+				connector.setProperty("compressableMimeType", "text/html,text/xml,text/plain,application/json");
+				connector.setEnableLookups(false);
+				connector.setURIEncoding("UTF-8");
+				// connector.setXpoweredBy(true);
+			}
+		});
 
 		List<ServletContextInitializer> servletContextInitializers = new ArrayList<>();
 		servletContextInitializers.add(new WebInitalizer());

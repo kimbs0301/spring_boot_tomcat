@@ -112,12 +112,13 @@
 			<version>${tomcat-embed-version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>
 			<version>${tomcat-embed-version}</version>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-el</artifactId>
