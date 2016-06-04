@@ -29,7 +29,7 @@ public class WebInitalizer implements ServletContextInitializer {
 		context.setServletContext(container);
 
 		container.addFilter("trackingFilter", new TrackingFilter()).addMappingForUrlPatterns(null, true, "/*");
-		container.addFilter("shallowEtagHeaderFilter", new ShallowEtagHeaderFilter()).addMappingForUrlPatterns(null, true, "/*");
+		// container.addFilter("shallowEtagHeaderFilter", new ShallowEtagHeaderFilter()).addMappingForUrlPatterns(null, true, "/*");
 		
 		DispatcherServlet dispatcher = new DispatcherServlet(context);
 		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", dispatcher);

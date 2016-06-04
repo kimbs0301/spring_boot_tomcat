@@ -30,9 +30,6 @@ public class EmbeddedTomcatConfig {
 	@Autowired
 	private Environment environment;
 
-	// @Autowired
-	// private EmbeddedTomcatWebInitalizer embeddedTomcatWebInitalizer;
-
 	public EmbeddedTomcatConfig() {
 		LOGGER.debug("==============");
 		LOGGER.debug("");
@@ -61,16 +58,17 @@ public class EmbeddedTomcatConfig {
 		accessLogValve.setSuffix(".log");
 		factory.addContextValves(accessLogValve);
 
-		// Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-		// connector.setPort(8081);
-		// factory.addAdditionalTomcatConnectors(connector);
-
 		// ApplicationContext parent = new AnnotationConfigApplicationContext(InitConfig.class);
 
 		factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
 
 			@Override
 			public void customize(Connector connector) {
+				connector.setProperty("maxProcessors", "150");
+				connector.setProperty("maxThreads", "150");
+				connector.setProperty("minSpareThreads", "25");
+				connector.setProperty("maxSpareThreads", "75");
+				connector.setProperty("acceptCount", "150");
 				connector.setProperty("useComet", "false");
 				connector.setProperty("connectionTimeout", "3000");
 				connector.setProperty("compression", "on");
@@ -85,7 +83,6 @@ public class EmbeddedTomcatConfig {
 		List<ServletContextInitializer> servletContextInitializers = new ArrayList<>();
 		servletContextInitializers.add(new WebInitalizer());
 		factory.setInitializers(servletContextInitializers);
-
 		return factory;
 	}
 }
