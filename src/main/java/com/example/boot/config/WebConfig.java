@@ -104,18 +104,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		// resolver.setOrder(1);
 		resolver.setContentNegotiationManager(manager);
 		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
-		// resolvers.add(jsonViewResolver());
+		resolvers.add(jsonViewResolver());
 		resolvers.add(jspViewResolver());
 		resolvers.add(new BeanNameViewResolver());
 		resolver.setViewResolvers(resolvers);
-		
 		return resolver;
 	}
 
-//	@Bean
-//	public ViewResolver jsonViewResolver() {
-//		return new JsonViewResolver(objectMapper);
-//	}
+	@Bean
+	public ViewResolver jsonViewResolver() {
+		return new JsonViewResolver(objectMapper);
+	}
 
 	@Bean
 	public ViewResolver jspViewResolver() {

@@ -1,6 +1,5 @@
 package com.example.boot.account.model;
 
-
 /**
  * @author gimbyeongsu
  * 
