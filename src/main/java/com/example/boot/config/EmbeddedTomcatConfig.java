@@ -74,7 +74,7 @@ public class EmbeddedTomcatConfig {
 				connector.setProperty("useComet", "false");
 				connector.setProperty("connectionTimeout", "3000");
 				connector.setProperty("compression", "on");
-				connector.setProperty("compressionMinSize", "512");
+				connector.setProperty("compressionMinSize", "2048");
 				connector.setProperty("compressableMimeType", "text/html,text/xml,text/plain,application/json");
 				connector.setEnableLookups(false);
 				connector.setURIEncoding("UTF-8");
