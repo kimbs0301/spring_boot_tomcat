@@ -32,9 +32,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		LOGGER.debug("method executed");
-		
-		// response.setHeader("Content-Length", "10");
-		// response.setContentLength(10);
 	}
 
 	@Override
