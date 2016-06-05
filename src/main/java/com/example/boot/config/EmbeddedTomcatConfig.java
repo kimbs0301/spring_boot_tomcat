@@ -5,7 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleEvent;
+import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.connector.Connector;
+import org.apache.catalina.core.StandardThreadExecutor;
 import org.apache.catalina.valves.AccessLogValve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +21,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +49,7 @@ public class EmbeddedTomcatConfig {
 		// EmbeddedServletContainerAutoConfiguration
 		TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory(
 				environment.getRequiredProperty("context.path"), 8080);
+		
 		factory.setProtocol("org.apache.coyote.http11.Http11NioProtocol");
 		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
 		mappings.add("html", "text/html;charset=UTF-8");
@@ -59,7 +68,29 @@ public class EmbeddedTomcatConfig {
 		factory.addContextValves(accessLogValve);
 
 		// ApplicationContext parent = new AnnotationConfigApplicationContext(InitConfig.class);
+		
+		final StandardThreadExecutor executor = new StandardThreadExecutor();
+		executor.setName("tomcatHttpThreadPool");
+		executor.setNamePrefix("HTTP-");
+		executor.setThreadPriority(Thread.NORM_PRIORITY);
+		executor.setMinSpareThreads(150);
+		executor.setMaxThreads(150);
+		executor.setMaxQueueSize(10000);
+		
+		factory.addContextCustomizers(new TomcatContextCustomizer() {
 
+			@Override
+			public void customize(Context context) {
+				
+			}});
+		
+		factory.addContextLifecycleListeners(new LifecycleListener(){
+
+			@Override
+			public void lifecycleEvent(LifecycleEvent event) {
+				
+			}});
+		
 		factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
 
 			@Override
@@ -89,12 +120,18 @@ public class EmbeddedTomcatConfig {
 				connector.setProperty("compressableMimeType", "text/html,text/xml,text/plain,application/json");
 				connector.setEnableLookups(false);
 				connector.setURIEncoding("UTF-8");
-				// connector.setXpoweredBy(true);
+				connector.setXpoweredBy(false);
 			}
 		});
 
 		List<ServletContextInitializer> servletContextInitializers = new ArrayList<>();
 		servletContextInitializers.add(new WebInitalizer());
+		servletContextInitializers.add(new ServletContextInitializer(){
+
+			@Override
+			public void onStartup(ServletContext servletContext) throws ServletException {
+				
+			}});
 		factory.setInitializers(servletContextInitializers);
 		return factory;
 	}

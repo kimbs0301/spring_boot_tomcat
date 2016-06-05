@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  */
 @Configuration
+// @Import(value = { CacheAutoConfiguration.class })
 public class RootConfig {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RootConfig.class);
 
