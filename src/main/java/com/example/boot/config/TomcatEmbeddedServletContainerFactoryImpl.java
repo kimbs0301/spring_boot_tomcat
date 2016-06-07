@@ -2,7 +2,6 @@ package com.example.boot.config;
 
 import java.io.File;
 
-import org.apache.catalina.Service;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardThreadExecutor;
 import org.apache.catalina.startup.Tomcat;
@@ -20,15 +19,15 @@ public class TomcatEmbeddedServletContainerFactoryImpl extends TomcatEmbeddedSer
 	@Override
 	public EmbeddedServletContainer getEmbeddedServletContainer(ServletContextInitializer... initializers) {
 		Tomcat tomcat = new Tomcat();
-		Service service = tomcat.getService();
 		
 		StandardThreadExecutor executor = new StandardThreadExecutor();
 		executor.setThreadPriority(5);
-		executor.setName("pool");
+		executor.setName("threadPool");
 		executor.setNamePrefix("HTTP-");
 		executor.setMaxThreads(10);
 		executor.setMinSpareThreads(5);
-		service.addExecutor(executor);
+		executor.setMaxQueueSize(100);
+		tomcat.getService().addExecutor(executor);
 		
 		File baseDir = createTempDir("tomcat");
 		tomcat.setBaseDir(baseDir.getAbsolutePath());
