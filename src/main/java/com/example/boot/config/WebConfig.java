@@ -6,10 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.EnableWebMvcConfiguration;
-import org.springframework.boot.autoconfigure.web.WebMvcProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +19,6 @@ import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -43,9 +39,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  */
 @Configuration
-@EnableWebMvc
+// @EnableWebMvc
 @Import(value = { EnableWebMvcConfiguration.class })
-@EnableConfigurationProperties({ WebMvcProperties.class, ResourceProperties.class })
+// @EnableConfigurationProperties({ WebMvcProperties.class, ResourceProperties.class })
 @ComponentScan(basePackages = { "com.example.boot.web" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
@@ -97,6 +93,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		converters.add(mappingJackson2HttpMessageConverter());
 		converters.add(mappingJackson2XmlHttpMessageConverter());
 	}
+	
+	
 
 	@Bean
 	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
