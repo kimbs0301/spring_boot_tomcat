@@ -2,7 +2,6 @@ package com.example.boot.config;
 
 import java.io.File;
 
-import org.apache.catalina.Server;
 import org.apache.catalina.Service;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardThreadExecutor;
