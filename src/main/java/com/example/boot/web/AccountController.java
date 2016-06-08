@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.boot.account.model.Account;
+import com.example.boot.aop.ParamAop;
+import com.example.boot.member.model.Member;
 
 /**
  * @author gimbyeongsu
@@ -22,8 +24,9 @@ public class AccountController {
 
 	@RequestMapping(value = "/member/{memberId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public Account getAccount(@PathVariable int memberId) {
+	public Account getAccount(@PathVariable int memberId, @ParamAop Member member) {
 		LOGGER.debug("{}", memberId);
+		LOGGER.debug("{}", member.getId());
 		Account account = new Account();
 		return account;
 	}

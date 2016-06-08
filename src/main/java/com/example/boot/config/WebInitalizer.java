@@ -23,8 +23,8 @@ public class WebInitalizer implements ServletContextInitializer {
 	public void onStartup(ServletContext container) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 
-		// context.setConfigLocations("com.example.boot.web", "com.example.boot.api");
-		context.register(WebConfig.class);
+		context.setConfigLocations("com.example.boot");
+		// context.register(WebConfig.class);
 		// container.addListener(new ContextLoaderListener(context));
 		context.setServletContext(container);
 

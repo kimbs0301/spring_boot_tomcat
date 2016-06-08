@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.EnableWebMvcConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -42,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 // @EnableWebMvc
 @Import(value = { EnableWebMvcConfiguration.class })
 // @EnableConfigurationProperties({ WebMvcProperties.class, ResourceProperties.class })
-@ComponentScan(basePackages = { "com.example.boot.web" })
+// @ComponentScan(basePackages = { "com.example.boot.web" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
 
@@ -79,22 +78,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 				.mediaType("html", MediaType.TEXT_HTML) //
 				.mediaType("json", MediaType.APPLICATION_JSON);
 	}
-	
+
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		MappingJackson2JsonView jsonView = new MappingJackson2JsonView(objectMapper);
-    	// jsonView.setPrettyPrint(true);
-    	jsonView.setUpdateContentLength(true);
-    	registry.enableContentNegotiation(jsonView);
+		// jsonView.setPrettyPrint(true);
+		jsonView.setUpdateContentLength(true);
+		registry.enableContentNegotiation(jsonView);
 	}
-	
+
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(mappingJackson2HttpMessageConverter());
 		converters.add(mappingJackson2XmlHttpMessageConverter());
 	}
-	
-	
 
 	@Bean
 	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {

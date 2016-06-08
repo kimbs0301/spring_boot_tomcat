@@ -1,4 +1,4 @@
-package com.example.boot.config;
+package com.example.main;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -22,6 +22,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import com.example.boot.config.TomcatEmbeddedServletContainerFactory;
+import com.example.boot.config.WebInitalizer;
+
 /**
  * @author gimbyeongsu
  * 
@@ -42,9 +45,9 @@ public class EmbeddedTomcatConfig {
 	@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
 		// EmbeddedServletContainerAutoConfiguration
-		TomcatEmbeddedServletContainerFactoryImpl factory = new TomcatEmbeddedServletContainerFactoryImpl(
+		TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory(
 				environment.getRequiredProperty("context.path"), 8080);
-		
+
 		factory.setProtocol("org.apache.coyote.http11.Http11NioProtocol");
 		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
 		mappings.add("html", "text/html;charset=UTF-8");
@@ -63,21 +66,23 @@ public class EmbeddedTomcatConfig {
 		factory.addContextValves(accessLogValve);
 
 		// ApplicationContext parent = new AnnotationConfigApplicationContext(InitConfig.class);
-		
+
 		factory.addContextCustomizers(new TomcatContextCustomizer() {
 
 			@Override
 			public void customize(Context context) {
-				
-			}});
-		
-		factory.addContextLifecycleListeners(new LifecycleListener(){
+
+			}
+		});
+
+		factory.addContextLifecycleListeners(new LifecycleListener() {
 
 			@Override
 			public void lifecycleEvent(LifecycleEvent event) {
-				
-			}});
-		
+
+			}
+		});
+
 		factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
 
 			@Override

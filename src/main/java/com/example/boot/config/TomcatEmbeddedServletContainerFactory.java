@@ -8,11 +8,14 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.boot.context.embedded.EmbeddedServletContainer;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
-public class TomcatEmbeddedServletContainerFactoryImpl extends TomcatEmbeddedServletContainerFactory {
+/**
+ * @author gimbyeongsu
+ * 
+ */
+public class TomcatEmbeddedServletContainerFactory extends org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory {
 	
-	public TomcatEmbeddedServletContainerFactoryImpl(String contextPath, int port) {
+	public TomcatEmbeddedServletContainerFactory(String contextPath, int port) {
 		super(contextPath, port);
 	}
 	
