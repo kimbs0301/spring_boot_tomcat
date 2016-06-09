@@ -13,3 +13,4 @@ curl -v -H "Content-type: application/json" -H "Accept: application/json" -H "Ac
 https://github.com/alx3apps/spring-embedded-tomcat
 https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat
 http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
+http://vlkan.com/blog/post/2015/01/30/java-null-check/
